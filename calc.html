@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Sostenibilidad</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1d1f21; /* Fondo gris oscuro futurista */
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            background: linear-gradient(to right, #8bc34a, #00bfa5); /* Verde futurista */
+            color: white;
+            padding: 20px;
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: #2c2f33; /* Gris oscuro para el contenedor */
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4); /* Sombra futurista */
+            color: #eee;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            background-color: #333; /* Fondo oscuro para los inputs */
+            color: #fff; /* Texto blanco */
+            border: 1px solid #8bc34a; /* Bordes verdes */
+            border-radius: 8px;
+        }
+
+        button {
+            background: linear-gradient(to right, #00bfa5, #8bc34a); /* Botón degradado futurista */
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #8bc34a, #00bfa5); /* Cambio de colores al hover */
+        }
+
+        #resultado {
+            background-color: #394044; /* Fondo gris más claro para el resultado */
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            color: #fff;
+        }
+
+        p {
+            font-size: 1.1em;
+        }
+
+        strong {
+            color: #8bc34a; /* Verde brillante */
+        }
+
+        /* Estilo para la imagen */
+        .image-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculadora de Sostenibilidad</h1>
+    
+    <div class="container">
+        <!-- Espacio para la imagen -->
+        <div class="image-container">
+            <img src="sustanint.jpg" alt="Imagen de sostenibilidad">
+        </div>
+
+        <form id="sustainabilityCalculator">
+            <label for="electricidad">Consumo de electricidad (kWh/mes): </label>
+            <input type="number" id="electricidad" required>
+
+            <label for="gas">Consumo de gas natural (m³/mes): </label>
+            <input type="number" id="gas" required>
+
+            <label for="auto">Kilómetros conducidos en automóvil por mes: </label>
+            <input type="number" id="auto" required>
+
+            <label for="vuelos">Número de vuelos al año: </label>
+            <input type="number" id="vuelos" required>
+
+            <button type="submit">Calcular Sostenibilidad</button>
+        </form>
+
+        <div id="resultado">
+            <p>Tu impacto ambiental es: </p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("sustainabilityCalculator").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            // Recoger los valores de los inputs
+            const electricidad = parseFloat(document.getElementById("electricidad").value);
+            const gas = parseFloat(document.getElementById("gas").value);
+            const auto = parseFloat(document.getElementById("auto").value);
+            const vuelos = parseInt(document.getElementById("vuelos").value);
+
+            // Factores de conversión aproximados
+            const factorElectricidadCO2 = 0.233;
+            const factorGasCO2 = 1.9;
+            const factorAutoCO2 = 0.21;
+            const factorVueloCO2 = 150;
+
+            const factorElectricidadCH4 = 0.005;
+            const factorGasCH4 = 0.02;
+            const factorAutoCH4 = 0.0005;
+            const factorVueloCH4 = 0.5;
+
+            const factorElectricidadNOx = 0.001;
+            const factorGasNOx = 0.005;
+            const factorAutoNOx = 0.0003;
+            const factorVueloNOx = 0.2;
+
+            // Cálculos de CO2
+            const huellaElectricidadCO2 = electricidad * factorElectricidadCO2 * 12;
+            const huellaGasCO2 = gas * factorGasCO2 * 12;
+            const huellaAutoCO2 = auto * factorAutoCO2 * 12;
+            const huellaVuelosCO2 = vuelos * factorVueloCO2;
+
+            // Cálculos de CH4
+            const huellaElectricidadCH4 = electricidad * factorElectricidadCH4 * 12;
+            const huellaGasCH4 = gas * factorGasCH4 * 12;
+            const huellaAutoCH4 = auto * factorAutoCH4 * 12;
+            const huellaVuelosCH4 = vuelos * factorVueloCH4;
+
+            // Cálculos de NOx
+            const huellaElectricidadNOx = electricidad * factorElectricidadNOx * 12;
+            const huellaGasNOx = gas * factorGasNOx * 12;
+            const huellaAutoNOx = auto * factorAutoNOx * 12;
+            const huellaVuelosNOx = vuelos * factorVueloNOx;
+
+            // Totales anuales
+            const totalCO2 = huellaElectricidadCO2 + huellaGasCO2 + huellaAutoCO2 + huellaVuelosCO2;
+            const totalCH4 = huellaElectricidadCH4 + huellaGasCH4 + huellaAutoCH4 + huellaVuelosCH4;
+            const totalNOx = huellaElectricidadNOx + huellaGasNOx + huellaAutoNOx + huellaVuelosNOx;
+
+            // Mostrar el resultado final
+            document.getElementById("resultado").innerHTML = `
+                <strong>Tu impacto ambiental anual es:</strong><br>
+                <strong>CO₂ (dióxido de carbono):</strong> ${totalCO2.toFixed(2)} kg<br>
+                <strong>CH₄ (metano):</strong> ${totalCH4.toFixed(2)} kg<br>
+                <strong>NOₓ (óxidos de nitrógeno):</strong> ${totalNOx.toFixed(2)} kg<br>
+            `;
+        });
+    </script>
+</body>
+</html>
